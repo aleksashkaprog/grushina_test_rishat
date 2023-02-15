@@ -1,5 +1,6 @@
 import stripe
 from django.conf import settings
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views import generic, View
 from django.views.generic import TemplateView
@@ -35,7 +36,9 @@ class CreateCheckoutSessionView(View):
             success_url=YOUR_DOMAIN + '/success/',
             cancel_url=YOUR_DOMAIN + '/cancel/',
         )
-        return redirect(checkout_session.url)
+        return JsonResponse({
+            'id': checkout_session.id
+        })
 
 
 class ItemDetailView(generic.DetailView):
